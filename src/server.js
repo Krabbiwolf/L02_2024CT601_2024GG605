@@ -1,15 +1,17 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import pedidosRouter from './Routes/PedidosRoutes.js';
+import detallePedidoRouter from './Routes/DetallePedidoRoutes.js';
 
 dotenv.config();
+
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.json({ mensaje: "Bievenido!" });
-})
+app.use('/pedidos', pedidosRouter);
+app.use('/detalles', detallePedidoRouter);
 
-app.listen(PORT, () => {
-    console.log("Servidor corriendo en el puerto " + PORT + "!");
-})
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Servidor corriendo en http://localhost:${process.env.PORT || 3000}`);
+});
